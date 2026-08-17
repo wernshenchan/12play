@@ -432,6 +432,48 @@
       line-height: 1.55;
     }
 
+    .growth-callout {
+      margin-top: clamp(24px, 3vw, 40px);
+      padding: clamp(20px, 2.4vw, 34px) clamp(24px, 3vw, 40px);
+      border-left: clamp(4px, .5vw, 6px) solid var(--accent);
+      background: rgba(214, 72, 49, .05);
+    }
+
+    .growth-callout .meta-label {
+      display: block;
+      margin-bottom: 14px;
+      color: var(--accent-deep);
+    }
+
+    .growth-value {
+      margin: 0 0 12px;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(2rem, 3.4vw, 3.2rem);
+      font-weight: 700;
+      line-height: .95;
+      letter-spacing: -.03em;
+    }
+
+    .growth-value small {
+      display: block;
+      margin-top: 8px;
+      color: var(--accent-deep);
+      font: 730 clamp(.62rem, .78vw, .84rem)/1.4 var(--body);
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .growth-detail {
+      margin: 0;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: clamp(.8rem, 1vw, 1.02rem);
+      line-height: 1.55;
+    }
+
+    .growth-detail strong { color: var(--ink); }
+
     .burst-flow {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -1124,6 +1166,11 @@
           <div class="metric"><span class="meta-label">Max potential cost</span><p class="metric-value">RM72,000–RM120,000<small>full 100-creator roster, incl. 20% management fee</small></p></div>
         </div>
         <p class="pipeline-note"><strong>At full scale:</strong> 100 creators = approximately <strong>RM60,000–RM100,000</strong> indicative creator cost (<strong>RM72,000–RM120,000</strong> including a 20% agency management fee) and <strong>500,000–1,000,000 gross content views</strong>, depending on creator mix and performance. Gross content views are not unique audience reach; overlap should be expected. Final commercial numbers depend on the confirmed roster and agency quotation.</p>
+        <div class="growth-callout">
+          <span class="meta-label">Potential growth · branded search lift</span>
+          <p class="growth-value">5,000–10,000<small>estimated branded searches</small></p>
+          <p class="growth-detail">Applying an illustrative <strong>1% view-to-search conversion rate</strong>, 500,000–1,000,000 gross content views could translate into roughly <strong>5,000–10,000 searches</strong> for “12Play” / “One Two Play”—the core objective this activation is designed to drive. A conservative assumption; actual conversion depends on creative execution, phrase familiarity and search-capture page performance.</p>
+        </div>
       </div>
       <p class="section-footer">Indicative planning range · <strong>Final roster dependent</strong></p>
     </section>
