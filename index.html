@@ -1,0 +1,1142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="12Play creator activation options and search-capture approach.">
+  <title>12Play — Creator Activation</title>
+  <style>
+    :root {
+      --paper: #f6f3ed;
+      --paper-deep: #e9e5dd;
+      --ink: #171716;
+      --muted: #686661;
+      --line: #c9c5bc;
+      --accent: #d64831;
+      --accent-deep: #a92e20;
+      --white: #fffdfa;
+      --display: Baskerville, "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      --body: "Avenir Next", Avenir, "Gill Sans", "Trebuchet MS", sans-serif;
+      --page-pad: clamp(38px, 6vw, 96px);
+      --content-width: 1240px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: #d8d4cc;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: #d8d4cc;
+      font-family: var(--body);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img,
+    video { max-width: 100%; }
+
+    .document {
+      width: min(100%, 1600px);
+      margin: 0 auto;
+      overflow: hidden;
+      background: var(--paper);
+      box-shadow: 0 24px 70px rgba(23, 23, 22, .14);
+    }
+
+    .page-section {
+      position: relative;
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      align-items: stretch;
+      gap: clamp(28px, 4vw, 64px);
+      padding: clamp(42px, 6vw, 92px) var(--page-pad);
+      isolation: isolate;
+      overflow: hidden;
+    }
+
+    .page-section::after {
+      content: attr(data-number);
+      position: absolute;
+      right: clamp(18px, 4vw, 64px);
+      top: 50%;
+      z-index: -1;
+      color: rgba(23, 23, 22, .035);
+      font: 700 clamp(12rem, 25vw, 28rem)/.7 var(--display);
+      letter-spacing: -.08em;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+
+    .section-kicker,
+    .section-footer,
+    .meta-label,
+    .sample-number,
+    .video-label,
+    .break-label {
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-size: clamp(.62rem, .76vw, .8rem);
+      font-weight: 760;
+    }
+
+    .section-kicker {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin: 0;
+      color: var(--accent-deep);
+    }
+
+    .section-kicker::before {
+      content: "";
+      width: 34px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .section-body {
+      width: min(100%, var(--content-width));
+      align-self: center;
+      margin: 0 auto;
+    }
+
+    .section-footer {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .section-footer strong {
+      color: var(--ink);
+      letter-spacing: .02em;
+    }
+
+    h1,
+    h2,
+    h3,
+    p { margin-top: 0; }
+
+    h1,
+    h2 {
+      margin-bottom: clamp(22px, 3vw, 42px);
+      font-family: var(--display);
+      font-weight: 500;
+      letter-spacing: -.045em;
+      line-height: .92;
+      text-wrap: balance;
+    }
+
+    h1 { font-size: clamp(4.2rem, 9vw, 9rem); }
+    h2 { font-size: clamp(2.7rem, 5.8vw, 6.2rem); }
+
+    h3 {
+      margin-bottom: 12px;
+      font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+      line-height: 1.25;
+    }
+
+    .lead {
+      max-width: 900px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(1.05rem, 1.65vw, 1.7rem);
+      line-height: 1.5;
+      text-wrap: pretty;
+    }
+
+    .lead strong { color: var(--ink); }
+    .accent { color: var(--accent); }
+
+    .page-break {
+      position: relative;
+      height: 1px;
+      margin: 0 var(--page-pad);
+      background: var(--ink);
+    }
+
+    .break-label {
+      position: absolute;
+      right: 0;
+      top: 0;
+      padding: 8px 0 8px 18px;
+      color: var(--muted);
+      background: var(--paper);
+      transform: translateY(-50%);
+    }
+
+    .objective-lockup {
+      max-width: 1100px;
+      padding-left: clamp(22px, 3vw, 44px);
+      border-left: clamp(5px, .5vw, 8px) solid var(--accent);
+    }
+
+    .objective-lockup .lead {
+      max-width: 820px;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1.55rem, 2.55vw, 2.85rem);
+      line-height: 1.22;
+    }
+
+    .campaign-flow {
+      display: grid;
+      grid-template-columns: .8fr auto 1.1fr auto .9fr auto .9fr auto 1.25fr;
+      align-items: stretch;
+      margin-top: clamp(34px, 5vw, 72px);
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .flow-node,
+    .flow-split {
+      min-height: clamp(150px, 16vw, 220px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(18px, 2vw, 30px);
+      background: rgba(255, 253, 250, .38);
+    }
+
+    .flow-node p,
+    .flow-split p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(.75rem, .9vw, .95rem);
+      line-height: 1.4;
+    }
+
+    .flow-node strong,
+    .flow-split strong {
+      display: block;
+      color: var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1.3rem, 2vw, 2.25rem);
+      font-weight: 500;
+      line-height: 1.04;
+      letter-spacing: -.03em;
+    }
+
+    .flow-split {
+      gap: 0;
+      padding: 0;
+    }
+
+    .flow-choice {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50%;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .flow-choice + .flow-choice { border-top: 1px solid var(--line); }
+
+    .flow-choice strong {
+      color: var(--accent-deep);
+      font-family: var(--body);
+      font-size: clamp(.88rem, 1.1vw, 1.15rem);
+      font-weight: 780;
+      letter-spacing: .03em;
+      text-transform: uppercase;
+    }
+
+    .flow-arrow {
+      width: clamp(28px, 3vw, 46px);
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      font-family: var(--display);
+      font-size: clamp(1.5rem, 2.5vw, 2.7rem);
+    }
+
+    .flow-note {
+      max-width: 900px;
+      margin: clamp(22px, 3vw, 38px) auto 0;
+      color: var(--muted);
+      font-size: clamp(.78rem, 1vw, 1rem);
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(300px, .88fr);
+      gap: clamp(40px, 7vw, 100px);
+      align-items: end;
+    }
+
+    .clean-list {
+      display: grid;
+      gap: clamp(14px, 1.5vw, 22px);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      counter-reset: points;
+    }
+
+    .clean-list li {
+      position: relative;
+      padding: 0 0 clamp(12px, 1.2vw, 18px) 46px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-size: clamp(.9rem, 1.1vw, 1.12rem);
+      line-height: 1.5;
+      counter-increment: points;
+    }
+
+    .clean-list li::before {
+      content: "0" counter(points);
+      position: absolute;
+      left: 0;
+      top: .12em;
+      color: var(--accent);
+      font-size: .72em;
+      font-weight: 780;
+      letter-spacing: .08em;
+    }
+
+    .clean-list strong { color: var(--ink); }
+
+    .phrase-stage {
+      margin: clamp(24px, 3vw, 42px) 0;
+      padding: clamp(22px, 2.4vw, 36px) 0;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+      font-family: var(--display);
+      font-size: clamp(1.7rem, 3.7vw, 4.3rem);
+      line-height: 1.08;
+      letter-spacing: -.035em;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .phrase-stage span { color: var(--accent); }
+
+    .exposure-sequence {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .sequence-item {
+      min-height: clamp(120px, 12vw, 170px);
+      padding: clamp(18px, 2vw, 30px);
+      border-right: 1px solid var(--line);
+    }
+
+    .sequence-item:last-child { border-right: 0; }
+
+    .sequence-item .meta-label {
+      display: block;
+      margin-bottom: 22px;
+      color: var(--accent-deep);
+    }
+
+    .sequence-item p {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.05rem, 1.55vw, 1.7rem);
+      line-height: 1.18;
+    }
+
+    .result-line {
+      margin: clamp(26px, 3vw, 42px) 0 0;
+      font-size: clamp(1.05rem, 1.8vw, 2rem);
+      font-weight: 680;
+      text-align: center;
+    }
+
+    .script-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .script-card {
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
+      padding: clamp(22px, 2.4vw, 34px);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 253, 250, .42);
+    }
+
+    .sample-number {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--accent);
+      font-size: clamp(.52rem, .62vw, .68rem);
+    }
+
+    .script-card h3 {
+      margin-bottom: clamp(16px, 1.8vw, 24px);
+      font-family: var(--display);
+      font-size: clamp(1.35rem, 1.8vw, 2rem);
+      font-weight: 500;
+      letter-spacing: -.025em;
+    }
+
+    .script-dialogue {
+      flex: 1;
+      margin-bottom: 20px;
+      padding-left: 18px;
+      border-left: 2px solid var(--accent);
+      font-family: var(--display);
+      font-size: clamp(1rem, 1.25vw, 1.3rem);
+      line-height: 1.4;
+    }
+
+    .script-dialogue p { margin: 0 0 7px; }
+    .script-dialogue p:last-child { margin-bottom: 0; }
+
+    .script-cut {
+      color: var(--accent-deep);
+      font-family: var(--body);
+      font-size: .65em;
+      font-weight: 780;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .script-how {
+      margin: 0;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: clamp(.74rem, .88vw, .92rem);
+      line-height: 1.52;
+    }
+
+    .script-how strong {
+      color: var(--ink);
+      font-weight: 760;
+    }
+
+    .samples-note,
+    .pipeline-note,
+    .optional-note {
+      max-width: 940px;
+      margin: clamp(18px, 2.3vw, 32px) 0 0;
+      color: var(--muted);
+      font-size: clamp(.76rem, .95vw, 1rem);
+      line-height: 1.55;
+    }
+
+    .burst-flow {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      margin-top: clamp(34px, 4vw, 58px);
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .burst-step {
+      position: relative;
+      min-height: clamp(145px, 15vw, 210px);
+      padding: clamp(20px, 2.2vw, 32px);
+      border-right: 1px solid var(--line);
+    }
+
+    .burst-step:last-child { border-right: 0; }
+
+    .burst-step:not(:last-child)::after {
+      content: "→";
+      position: absolute;
+      right: -11px;
+      top: 50%;
+      z-index: 2;
+      width: 22px;
+      height: 22px;
+      display: grid;
+      place-items: center;
+      color: var(--accent);
+      background: var(--paper);
+      transform: translateY(-50%);
+    }
+
+    .burst-step .meta-label {
+      display: block;
+      margin-bottom: 22px;
+      color: var(--accent-deep);
+    }
+
+    .burst-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(.76rem, .98vw, 1.02rem);
+      line-height: 1.48;
+    }
+
+    .burst-step strong { color: var(--ink); }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: clamp(28px, 5vw, 72px);
+      width: 100%;
+      margin: 0;
+    }
+
+    .video-content {
+      width: min(100%, 900px);
+    }
+
+    .video-content > h2 {
+      width: 100%;
+      max-width: none;
+      margin-bottom: clamp(28px, 3.4vw, 48px);
+      font-size: clamp(2.8rem, 4.5vw, 5rem);
+      text-align: center;
+    }
+
+    .video-panel { min-width: 0; }
+
+    .video-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .video-label span:last-child {
+      color: var(--accent-deep);
+      font-size: .86em;
+    }
+
+    .video-frame {
+      position: relative;
+      aspect-ratio: 9 / 16;
+      display: grid;
+      place-items: center;
+      max-height: 66svh;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #111;
+    }
+
+    .video-frame video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: contain;
+      background: #111;
+    }
+
+    .video-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      padding: 30px;
+      color: var(--ink);
+      background: var(--paper-deep);
+      text-align: center;
+    }
+
+    .video-frame.has-error .video-fallback { display: grid; }
+    .video-frame.has-error video { visibility: hidden; }
+
+    .video-fallback strong {
+      display: block;
+      margin-bottom: 8px;
+      font-family: var(--display);
+      font-size: clamp(1.15rem, 1.7vw, 1.75rem);
+    }
+
+    .video-fallback small {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .optional-layout {
+      display: grid;
+      grid-template-columns: .92fr 1.08fr;
+      gap: clamp(42px, 7vw, 100px);
+      align-items: center;
+    }
+
+    .browser-mock {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--white);
+      box-shadow: 0 24px 60px rgba(23, 23, 22, .09);
+    }
+
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 13px 16px;
+      border-bottom: 1px solid var(--line);
+      background: var(--paper-deep);
+    }
+
+    .browser-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .browser-dot {
+      width: 7px;
+      height: 7px;
+      border: 1px solid var(--muted);
+      border-radius: 50%;
+    }
+
+    .browser-url {
+      flex: 1;
+      margin: 0;
+      padding: 7px 12px;
+      color: var(--muted);
+      border: 1px solid var(--line);
+      background: var(--paper);
+      font-size: clamp(.65rem, .82vw, .82rem);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .landing-preview {
+      min-height: clamp(320px, 34vw, 470px);
+      display: grid;
+      place-items: center;
+      padding: clamp(28px, 5vw, 70px);
+      text-align: center;
+    }
+
+    .landing-preview small {
+      color: var(--accent-deep);
+      font-size: .68rem;
+      font-weight: 780;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .landing-preview h3 {
+      margin: 16px 0 4px;
+      font-family: var(--display);
+      font-size: clamp(2.7rem, 5vw, 5.6rem);
+      font-weight: 500;
+      line-height: .95;
+      letter-spacing: -.045em;
+    }
+
+    .landing-preview p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(.9rem, 1.1vw, 1.1rem);
+    }
+
+    .optional-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-top: clamp(26px, 3vw, 42px);
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .optional-item {
+      min-height: 116px;
+      padding: 20px;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .optional-item .meta-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent-deep);
+    }
+
+    .optional-item p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(.76rem, .94vw, .96rem);
+      line-height: 1.45;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr 1fr 1.25fr;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .metric {
+      min-height: clamp(170px, 18vw, 250px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(22px, 2.5vw, 38px);
+      border-right: 1px solid var(--line);
+    }
+
+    .metric:last-child { border-right: 0; }
+
+    .metric .meta-label { color: var(--muted); }
+
+    .metric-value {
+      margin: 0;
+      font-family: var(--display);
+      font-size: clamp(1.8rem, 3.25vw, 3.8rem);
+      line-height: .95;
+      letter-spacing: -.04em;
+    }
+
+    .metric-value small {
+      display: block;
+      margin-top: 10px;
+      color: var(--accent-deep);
+      font: 730 clamp(.63rem, .78vw, .84rem)/1.4 var(--body);
+      letter-spacing: .03em;
+    }
+
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-top: 1px solid var(--ink);
+      border-bottom: 1px solid var(--ink);
+    }
+
+    .comparison-column {
+      padding: clamp(28px, 4vw, 52px);
+    }
+
+    .comparison-column + .comparison-column { border-left: 1px solid var(--line); }
+
+    .comparison-column .meta-label {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--accent-deep);
+    }
+
+    .comparison-column h3 {
+      font-family: var(--display);
+      font-size: clamp(1.6rem, 2.9vw, 3.3rem);
+      font-weight: 500;
+      letter-spacing: -.03em;
+    }
+
+    .comparison-column p {
+      max-width: 520px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: clamp(.85rem, 1.1vw, 1.12rem);
+      line-height: 1.52;
+    }
+
+    .closing-line {
+      margin: clamp(34px, 4vw, 58px) 0 14px;
+      color: var(--accent);
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 5.2vw, 5.8rem);
+      line-height: 1;
+      letter-spacing: -.045em;
+      text-align: center;
+    }
+
+    .closing-question {
+      max-width: 850px;
+      margin: 0 auto;
+      color: var(--muted);
+      font-size: clamp(.8rem, 1.05vw, 1.08rem);
+      line-height: 1.55;
+      text-align: center;
+    }
+
+    @media (max-width: 980px) {
+      .campaign-flow {
+        grid-template-columns: 1fr;
+      }
+
+      .flow-node,
+      .flow-split { min-height: 120px; }
+
+      .flow-arrow {
+        width: auto;
+        height: 44px;
+        transform: rotate(90deg);
+      }
+
+      .two-column,
+      .optional-layout { grid-template-columns: 1fr; }
+
+      .two-column { align-items: start; }
+      .optional-layout { gap: 34px; }
+      .burst-flow { grid-template-columns: 1fr; }
+      .burst-step { min-height: 0; border-right: 0; border-bottom: 1px solid var(--line); }
+      .burst-step:last-child { border-bottom: 0; }
+      .burst-step:not(:last-child)::after { display: none; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric:nth-child(2) { border-right: 0; }
+      .metric:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+    }
+
+    @media (max-width: 680px) {
+      :root { --page-pad: 22px; }
+
+      .document { box-shadow: none; }
+      .page-section { min-height: auto; padding-block: 58px; gap: 34px; }
+      .page-section::after { display: none; }
+      .page-break { margin-inline: var(--page-pad); }
+      .break-label { font-size: .52rem; }
+      .objective-lockup { padding-left: 18px; }
+      .phrase-stage { white-space: normal; }
+      .exposure-sequence { grid-template-columns: 1fr 1fr; }
+      .sequence-item:nth-child(2) { border-right: 0; }
+      .sequence-item:nth-child(-n + 2) { border-bottom: 1px solid var(--line); }
+      .script-grid { grid-template-columns: 1fr; }
+      .script-card { min-height: 0; }
+      .video-content > h2 { max-width: 330px; margin-inline: auto; }
+      .video-grid { grid-template-columns: 1fr; max-width: 330px; }
+      .video-frame { max-height: none; }
+      .optional-list { grid-template-columns: 1fr; }
+      .metrics { grid-template-columns: 1fr 1fr; }
+      .metric { min-height: 150px; padding: 18px; }
+      .comparison { grid-template-columns: 1fr; }
+      .comparison-column + .comparison-column { border-left: 0; border-top: 1px solid var(--line); }
+      .section-footer { max-width: 260px; line-height: 1.55; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+
+    @media print {
+      @page { size: 16in 9in; margin: 0; }
+
+      html,
+      body {
+        background: white;
+      }
+
+      .document {
+        width: auto;
+        max-width: none;
+        box-shadow: none;
+      }
+
+      .page-section {
+        width: 16in;
+        height: 9in;
+        min-height: 9in;
+        overflow: hidden;
+        break-after: page;
+        page-break-after: always;
+      }
+
+      .page-break { display: none; }
+      .video-frame { max-height: 5.3in; }
+    }
+  </style>
+</head>
+<body>
+  <main class="document" aria-label="12Play creator activation presentation">
+    <section class="page-section" id="page-1" data-number="01" aria-labelledby="page-1-title">
+      <p class="section-kicker">Creator activation · Layer 1</p>
+      <div class="section-body objective-lockup">
+        <h1 id="page-1-title"><span class="accent">12</span>Play</h1>
+        <p class="lead">Create enough curiosity around 12Play that more people actively search for the name.</p>
+      </div>
+      <p class="section-footer"><strong>12PLAY</strong> · Options A + B</p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 01 / 10</span></div>
+
+    <section class="page-section" id="page-2" data-number="02" aria-labelledby="page-2-title">
+      <p class="section-kicker">Strategy overview</p>
+      <div class="section-body">
+        <h2 id="page-2-title">Campaign Loop</h2>
+        <p class="lead">Creator activity starts the question. The search experience gives that curiosity somewhere relevant to land.</p>
+        <div class="campaign-flow" aria-label="Creators to search-capture page campaign flow">
+          <div class="flow-node"><span class="meta-label">Starting point</span><strong>Creators</strong><p>Many native voices create repeated exposure.</p></div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="flow-split">
+            <div class="flow-choice"><strong>Option A</strong></div>
+            <div class="flow-choice"><strong>Option B</strong></div>
+          </div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="flow-node"><span class="meta-label">Execution</span><strong>Tactics</strong><p>Sustained repetition or tactical viral bursts.</p></div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="flow-node"><span class="meta-label">Audience action</span><strong>Search “Want to Play / 12Play”</strong><p>Curiosity becomes active intent.</p></div>
+          <div class="flow-arrow" aria-hidden="true">→</div>
+          <div class="flow-node"><span class="meta-label">Optional capture</span><strong>Quick-deploy page</strong><p>A relevant organic destination under the 12Play domain.</p></div>
+        </div>
+        <p class="flow-note">Both creator options work towards the same outcome: familiarity, curiosity and increased branded search activity.</p>
+      </div>
+      <p class="section-footer">Creators → Options → Tactics → Search → <strong>12Play</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 02 / 10</span></div>
+
+    <section class="page-section" id="page-3" data-number="03" aria-labelledby="page-3-title">
+      <p class="section-kicker">Option A</p>
+      <div class="section-body two-column">
+        <div>
+          <h2 id="page-3-title">Option A — Sustained Creator Activation</h2>
+          <p class="lead">Use a broad group of micro-influencers and KOCs to turn the <strong>14 sample executions</strong> into a month of creator-native variations.</p>
+        </div>
+        <ol class="clean-list">
+          <li><strong>Start with proven mechanics.</strong> Creators can use the existing ideas or develop new versions in their own style.</li>
+          <li><strong>Leave the loop open.</strong> Each video introduces the phrase or joke, then ends abruptly without explaining everything.</li>
+          <li><strong>Build familiarity through frequency.</strong> The activation works collectively—not through one hero creator or one viral post.</li>
+        </ol>
+      </div>
+      <p class="section-footer">The content changes. <strong>The phrase stays familiar.</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 03 / 10</span></div>
+
+    <section class="page-section" id="page-4" data-number="04" aria-labelledby="page-4-title">
+      <p class="section-kicker">How Option A works</p>
+      <div class="section-body">
+        <h2 id="page-4-title">Repetition creates the question.</h2>
+        <div class="phrase-stage">12PLAY <span>→</span> ONE TWO PLAY <span>→</span> WANT TO PLAY?</div>
+        <div class="exposure-sequence" aria-label="Repeated creator exposure over one month">
+          <div class="sequence-item"><span class="meta-label">Creator 01</span><p>Pronunciation joke</p></div>
+          <div class="sequence-item"><span class="meta-label">Creator 02</span><p>Different social setup</p></div>
+          <div class="sequence-item"><span class="meta-label">Creator 03</span><p>“WANT TO PLAY?”</p></div>
+          <div class="sequence-item"><span class="meta-label">Across the month</span><p>The pattern becomes familiar</p></div>
+        </div>
+        <p class="result-line">Repeated exposure → Curiosity → Search “12Play”</p>
+      </div>
+      <p class="section-footer">Designed to increase branded search volume over time.</p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 04 / 10</span></div>
+
+    <section class="page-section" id="page-5" data-number="05" aria-labelledby="page-5-title">
+      <p class="section-kicker">Option A · Creative starting points</p>
+      <div class="section-body">
+        <h2 id="page-5-title">The 14 Sample Executions</h2>
+        <div class="script-grid" aria-label="Fourteen example creator scripts">
+          <article class="script-card">
+            <span class="sample-number">01</span>
+            <h3>Pronunciation Correction</h3>
+            <div class="script-dialogue"><p>“Eh, this Twelve Play…”</p><p>“Twelve your head. One Two Play lah.”</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Open in the first two seconds. Say the name twice, keep the correction dry and natural, then end immediately—no explanation.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">02</span>
+            <h3>Interrupted Invitation</h3>
+            <div class="script-dialogue"><p>“Tonight you free?”</p><p>“Why?”</p><p>“One Two…”</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Use a familiar social setup, then interrupt the expected answer. Another creator can complete “Play” in a later post.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">03</span>
+            <h3>Social Correction</h3>
+            <div class="script-dialogue"><p>Someone says “Twelve Play.”</p><p>Everyone nearby pauses and looks at them.</p><p>One person quietly says: “One. Two. Play.”</p></div>
+            <p class="script-how"><strong>How it works:</strong> Treat the wrong pronunciation like a small local social mistake. The reaction carries the humour; do not add a sales line.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">04</span>
+            <h3>Distributed Fragments</h3>
+            <div class="script-dialogue"><p>Creator A: “One…”</p><p>Creator B, later: “Two…”</p><p>Creator C looks at the camera.</p><p>Caption: “You know already?”</p></div>
+            <p class="script-how"><strong>How it works:</strong> Coordinate creators so no single clip carries the full idea. Repetition across feeds makes the audience assemble the phrase and search for context.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">05</span>
+            <h3>“What You Want?”</h3>
+            <div class="script-dialogue"><p>A girl looks unhappy. A man offers water, then food. She turns both away.</p><p>“Actually, what you want?”</p><p>“One Two Play lah!”</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Let him keep solving the wrong problem while she controls the final punchline. Keep the acting exaggerated and the dialogue short.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">06</span>
+            <h3>Girl-Group Correction</h3>
+            <div class="script-dialogue"><p>One girl says: “Twelve Play.”</p><p>The group goes quiet.</p><p>Another girl leans in: “Twelve your head. One Two Play lah.”</p></div>
+            <p class="script-how"><strong>How it works:</strong> Treat the wrong pronunciation like a friend-group offence. The group reaction makes the correction more memorable.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">07</span>
+            <h3>GRWM Interruption</h3>
+            <div class="script-dialogue"><p>A creator is doing her makeup.</p><p>Off-camera: “Dress until like this, where you going?”</p><p>She looks into the mirror: “One Two Play lah.”</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Insert the line into her existing beauty or GRWM format. The visual stays native to her feed; only the ending carries the campaign.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">08</span>
+            <h3>Café-Order Misunderstanding</h3>
+            <div class="script-dialogue"><p>Server: “One or two?”</p><p>Girl: “One Two Play.”</p><p>Server: “Sorry?”</p><p>Her friend: “Aiya, she started already.”</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Use a normal ordering question to trigger the phrase. This is especially natural for food, café and lifestyle creators.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">09</span>
+            <h3>Shopping Misdirection</h3>
+            <div class="script-dialogue"><p>A girl holds up two outfits.</p><p>“One or two?”</p><p>Her friend: “One.”</p><p>She replies: “One Two Play lah—not asking you.”</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Hijack a familiar fashion or unboxing decision. The setup looks like normal lifestyle content until the final line changes its meaning.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">10</span>
+            <h3>Girls’ Night Countdown</h3>
+            <div class="script-dialogue"><p>A group is ready to leave.</p><p>One girl: “Ready?”</p><p>The group: “One… Two…”</p><p>The last girl turns to camera: “Play.”</p><p>The door closes.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Turn the phrase into a shared ritual before a night out, event or group reveal. The rhythm can recur across several creators.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">11</span>
+            <h3>Woman-to-Woman Comment Reply</h3>
+            <div class="script-dialogue"><p>Pinned comment: “What is One Two Play?”</p><p>Creator replies: “Ask her—she started it.”</p><p>She tags another female creator.</p><p class="script-cut">Cut.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Use genuine audience confusion to hand the story from one creator to another. Each woman adds a clue without closing the loop.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">12</span>
+            <h3>DJ Countdown and Drop</h3>
+            <div class="script-dialogue"><p>The DJ raises one finger, then two.</p><p>The crowd expects the drop.</p><p>She says: “Play.”</p><p class="script-cut">The video cuts before the music lands.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Use the natural grammar of a DJ countdown. A follow-up clip or another creator can deliver the missing drop.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">13</span>
+            <h3>Background Interruption</h3>
+            <div class="script-dialogue"><p>A creator is filming normal lifestyle content.</p><p>Someone off-camera says: “One… Two…”</p><p>She pauses: “Eh, don’t start.”</p></div>
+            <p class="script-how"><strong>How it works:</strong> Place the phrase in the background rather than making it the subject. Repeat it across beauty, food, fitness and travel content until it feels culturally present.</p>
+          </article>
+          <article class="script-card">
+            <span class="sample-number">14</span>
+            <h3>Search Reaction</h3>
+            <div class="script-dialogue"><p>A creator types “12Play” but keeps the screen hidden.</p><p>Pause.</p><p>“Ohhh. One Two Play.”</p><p class="script-cut">Cut before the reveal.</p></div>
+            <p class="script-how"><strong>How it works:</strong> Show that the search resolves the joke without displaying or explaining the answer. This makes branded search the final audience action.</p>
+          </article>
+        </div>
+        <p class="samples-note">These are starting points—not fixed scripts. Creators adapt the mechanic to their audience and native content style while keeping “ONE TWO PLAY” recognisable.</p>
+      </div>
+      <p class="section-footer">Fourteen mechanics. <strong>Many creator-native variations.</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 05 / 10</span></div>
+
+    <section class="page-section" id="page-6" data-number="06" aria-labelledby="page-6-title">
+      <p class="section-kicker">Option B</p>
+      <div class="section-body">
+        <h2 id="page-6-title">Option B — Viral Moment Bursts</h2>
+        <p class="lead">Hijack a suitable recent viral moment with an AI-created 12Play version, then seed it through creators as a concentrated, on-demand burst.</p>
+        <div class="burst-flow" aria-label="Viral moment activation flow">
+          <div class="burst-step"><span class="meta-label">01 · Spot</span><p>Identify a <strong>relevant viral moment</strong> while it is still moving.</p></div>
+          <div class="burst-step"><span class="meta-label">02 · Recreate</span><p>Produce a recognisably similar <strong>AI-created version</strong>.</p></div>
+          <div class="burst-step"><span class="meta-label">03 · Brand</span><p>Introduce <strong>12PLAY</strong> and/or <strong>WANT TO PLAY?</strong></p></div>
+          <div class="burst-step"><span class="meta-label">04 · Seed</span><p>Distribute through a selected <strong>creator network</strong>.</p></div>
+          <div class="burst-step"><span class="meta-label">05 · Prompt</span><p>Create <strong>curiosity</strong> that ends in branded search.</p></div>
+        </div>
+      </div>
+      <p class="section-footer">Activated when the moment is right—<strong>not tied to a continuous monthly campaign.</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 06 / 10</span></div>
+
+    <section class="page-section" id="page-7" data-number="07" aria-labelledby="page-7-title">
+      <p class="section-kicker">Option B · Proof of concept</p>
+      <div class="section-body video-content">
+        <h2 id="page-7-title">Reference → 12Play Version</h2>
+        <div class="video-grid">
+          <div class="video-panel">
+            <p class="video-label"><span>Original Reference</span><span>Viral source</span></p>
+            <div class="video-frame">
+              <video src="media/Original Reference.mp4" controls playsinline preload="metadata" aria-label="Original Reference video"></video>
+              <div class="video-fallback" role="status"><div><strong>Original Reference</strong><small>The video file could not be loaded.</small></div></div>
+            </div>
+          </div>
+          <div class="video-panel">
+            <p class="video-label"><span>12Play Example</span><span>AI-created adaptation</span></p>
+            <div class="video-frame">
+              <video src="media/12Play Example.mp4" controls playsinline preload="metadata" aria-label="12Play Example video"></video>
+              <div class="video-fallback" role="status"><div><strong>12Play Example</strong><small>The video file could not be loaded.</small></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="section-footer">The familiar moment earns attention. <strong>The unexplained wording creates the question.</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 07 / 10</span></div>
+
+    <section class="page-section" id="page-8" data-number="08" aria-labelledby="page-8-title">
+      <p class="section-kicker">Optional · Search capture</p>
+      <div class="section-body optional-layout">
+        <div>
+          <h2 id="page-8-title">Optional — Quick-Deploy Search Capture Page</h2>
+          <p class="lead">A simple, indexable one-page destination under the 12Play domain—built to associate <strong>WANT TO PLAY?</strong> directly with <strong>12Play</strong>.</p>
+          <div class="optional-list">
+            <div class="optional-item"><span class="meta-label">Focused</span><p>One page and one clear association between the campaign phrase and 12Play.</p></div>
+            <div class="optional-item"><span class="meta-label">Indexable</span><p>Purposeful page title, headline, supporting copy and search-friendly structure.</p></div>
+            <div class="optional-item"><span class="meta-label">Mobile-first</span><p>Fast, simple and designed for the device most creator audiences will use.</p></div>
+            <div class="optional-item"><span class="meta-label">Measurable</span><p>Analytics and Search Console submission to monitor impressions, clicks and visits.</p></div>
+          </div>
+          <p class="optional-note">This is an attempt to improve organic relevance and capture campaign-generated searches—not a ranking guarantee.</p>
+        </div>
+        <div class="browser-mock" aria-label="Conceptual search-capture landing page mockup">
+          <div class="browser-bar">
+            <div class="browser-dots" aria-hidden="true"><span class="browser-dot"></span><span class="browser-dot"></span><span class="browser-dot"></span></div>
+            <p class="browser-url">12play21.com/wanttoplay</p>
+          </div>
+          <div class="landing-preview">
+            <div>
+              <small>12Play</small>
+              <h3>Want to play?</h3>
+              <p>One phrase. One relevant destination.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="section-footer">Quick to deploy · Easy to index · <strong>Built to close the organic search loop</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 08 / 10</span></div>
+
+    <section class="page-section" id="page-9" data-number="09" aria-labelledby="page-9-title">
+      <p class="section-kicker">Influencer pipeline</p>
+      <div class="section-body">
+        <h2 id="page-9-title">Scale at a Glance</h2>
+        <div class="metrics">
+          <div class="metric"><span class="meta-label">Creator pool</span><p class="metric-value">Up to 100<small>creators per activation</small></p></div>
+          <div class="metric"><span class="meta-label">Typical views</span><p class="metric-value">8,000–10,000<small>small KOL / micro-influencer</small></p></div>
+          <div class="metric"><span class="meta-label">Typical views</span><p class="metric-value">5,000–8,000<small>KOC / emerging creator</small></p></div>
+          <div class="metric"><span class="meta-label">Indicative cost</span><p class="metric-value">RM600–RM1,000<small>per creator</small></p></div>
+        </div>
+        <p class="pipeline-note"><strong>At full scale:</strong> 100 creators = approximately <strong>RM60,000–RM100,000</strong> indicative creator cost and <strong>500,000–1,000,000 gross content views</strong>, depending on creator mix and performance. Gross content views are not unique audience reach; overlap should be expected. Final commercial numbers depend on the confirmed roster and agency quotation.</p>
+      </div>
+      <p class="section-footer">Indicative planning range · <strong>Final roster dependent</strong></p>
+    </section>
+
+    <div class="page-break" aria-hidden="true"><span class="break-label">Page break · 09 / 10</span></div>
+
+    <section class="page-section" id="page-10" data-number="10" aria-labelledby="page-10-title">
+      <p class="section-kicker">The choice</p>
+      <div class="section-body">
+        <h2 id="page-10-title">Sustained vs Tactical</h2>
+        <div class="comparison">
+          <div class="comparison-column">
+            <span class="meta-label">Option A</span>
+            <h3>Sustained Creator Activation</h3>
+            <p>Repeated exposure over approximately one month. Frequency across different creators makes ONE TWO PLAY / WANT TO PLAY? increasingly familiar.</p>
+          </div>
+          <div class="comparison-column">
+            <span class="meta-label">Option B</span>
+            <h3>Viral Moment Bursts</h3>
+            <p>Activate only when there is a suitable cultural moment. A concentrated burst creates sudden curiosity around 12PLAY / WANT TO PLAY?</p>
+          </div>
+        </div>
+        <p class="closing-line">Curiosity → Branded Search</p>
+        <p class="closing-question">The primary question: did enough exposure and curiosity translate into increased search activity for 12Play?</p>
+      </div>
+      <p class="section-footer"><strong>12PLAY</strong> · Creator activation</p>
+    </section>
+  </main>
+
+  <script>
+    document.querySelectorAll('.video-frame video').forEach(video => {
+      const frame = video.closest('.video-frame');
+      video.addEventListener('error', () => frame.classList.add('has-error'));
+      video.addEventListener('loadedmetadata', () => frame.classList.remove('has-error'));
+    });
+  </script>
+</body>
+</html>
